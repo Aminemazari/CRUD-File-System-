@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "yargs": "^17.7.2"
+  },
+  "bin": {
+    "note": "index.js"
+  },
+  "name": "file-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -1,8 +1,16 @@
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import {newNote, getAllNotes, findNotes, removeNote, removeAllNotes} from './notes.js'
-import {listNotes} from './utils.js'
-import { start } from './server.js'
+import {newNote,getAllNotes,removeAllNotes, findNotes,} from './note.js'
+import { startServer } from './server.js'
+
+const listNotes = (notes) => {
+  notes.forEach(note => {
+    console.log('\n')
+    console.log('id: ', note.id)
+    console.log('tags: ', note.tags.join(', ')),
+    console.log('note: ', note.content)
+  })
+}
 
 yargs(hideBin(process.argv))
   .command('new <note>', 'create a new note', yargs => {
@@ -13,7 +21,7 @@ yargs(hideBin(process.argv))
   }, async (argv) => {
     const tags = argv.tags ? argv.tags.split(',') : []
     const note = await newNote(argv.note, tags)
-    console.log('Note added!', note.id)
+    console.log('Note added!', note)
   })
   .option('tags', {
     alias: 't',
@@ -21,8 +29,8 @@ yargs(hideBin(process.argv))
     description: 'tags to add to the note'
   })
   .command('all', 'get all notes', () => {}, async (argv) => {
-    const notes = await getAllNotes()
-    listNotes(notes)
+    const notes= await getAllNotes();
+    console.log('All notes:' ,notes);
   })
   .command('find <filter>', 'get matching notes', yargs => {
     return yargs.positional('filter', {
@@ -30,8 +38,8 @@ yargs(hideBin(process.argv))
       type: 'string'
     })
   }, async (argv) => {
-    const notes = await findNotes(argv.filter)
-    listNotes(notes)
+    const notes = await findNotes(argv.filter);
+    console.log('Matching notes:', notes)
   })
   .command('remove <id>', 'remove a note by id', yargs => {
     return yargs.positional('id', {
@@ -39,12 +47,7 @@ yargs(hideBin(process.argv))
       description: 'The id of the note you want to remove'
     })
   }, async (argv) => {
-    const id = await removeNote(argv.id)
-    if (id) {
-      console.log('Note removed: ', id)
-    } else {
-      console.log('Note not found')
-    }
+    await removeNote(argv.id);
   })
   .command('web [port]', 'launch website to see notes', yargs => {
     return yargs
@@ -54,12 +57,12 @@ yargs(hideBin(process.argv))
         type: 'number'
       })
   }, async (argv) => {
-    const notes = await getAllNotes()
-    start(notes, argv.port)
+    const notes = await getAllNotes();
+    startServer(notes, argv.port);
   })
   .command('clean', 'remove all notes', () => {}, async (argv) => {
-    await removeAllNotes()
-    console.log('All notes removed')
+    await removeAllNotes();
+
   })
   .demandCommand(1)
   .parse()

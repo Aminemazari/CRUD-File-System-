@@ -1,3 +1,17 @@
 {
-  "notes" :[]
+  "notes": [
+    {
+      "id": 1740245593376,
+      "content": "hello word",
+      "tags": [
+        "work",
+        " sleep"
+      ]
+    },
+    {
+      "id": 1740301616528,
+      "content": "amine",
+      "tags": []
+    }
+  ]
 }

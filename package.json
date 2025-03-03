@@ -1,19 +1,23 @@
 {
   "dependencies": {
+    "open": "^10.1.0",
     "yargs": "^17.7.2"
   },
   "bin": {
     "note": "index.js"
   },
+  "type": "module",
   "name": "file-system",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
